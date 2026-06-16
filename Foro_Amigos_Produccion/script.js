@@ -13,7 +13,7 @@
 // Configuración de API local/producción
 // =========================================================
 
-const RENDER_BACKEND_URL = ""; // Pega aquí tu URL real de Render, sin slash final.
+const RENDER_BACKEND_URL = "https://foro-amigos-produccion.onrender.com";
 
 const isLocal =
   window.location.hostname === "127.0.0.1" ||
