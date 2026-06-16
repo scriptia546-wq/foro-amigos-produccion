@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Interfaz de foro social privado para un grupo cerrado de amigos." />
+  <title>Círculo Privado | Foro de Amigos</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Boxicons CDN -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Overlay para cerrar el menú lateral en móvil -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <!-- Navbar fija -->
+  <header class="navbar">
+    <div class="navbar__left">
+      <button class="icon-btn navbar__menu-btn" id="openSidebarBtn" type="button" aria-label="Abrir menú lateral">
+        <i class="bx bx-menu"></i>
+      </button>
+
+      <a href="#" class="brand" aria-label="Ir al inicio">
+        <span class="brand__mark">
+          <i class="bx bx-shield-quarter"></i>
+        </span>
+
+        <span class="brand__text">
+          <strong>Círculo</strong>
+          <small><i class="bx bx-lock-alt"></i> Red privada</small>
+        </span>
+      </a>
+    </div>
+
+    <form class="search" role="search">
+      <i class="bx bx-search search__icon" aria-hidden="true"></i>
+      <input
+        id="searchInput"
+        class="search__input"
+        type="search"
+        placeholder="Buscar mensajes, archivos o amigos"
+        autocomplete="off"
+      />
+    </form>
+
+    <div class="navbar__actions">
+      <button class="new-post-btn" type="button">
+        <i class="bx bx-plus"></i>
+        <span>Nuevo Post</span>
+      </button>
+
+      <button class="icon-btn notification-btn" type="button" aria-label="Notificaciones">
+        <i class="bx bx-bell"></i>
+        <span class="notification-dot" aria-hidden="true"></span>
+      </button>
+
+      <button class="user-chip" type="button" aria-label="Usuario activo">
+        <span class="avatar avatar--me">RA</span>
+        <span class="user-chip__name">Rodrigo</span>
+        <i class="bx bx-chevron-down"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Estructura principal -->
+  <div class="app-layout">
+    <!-- Sidebar colapsable -->
+    <aside class="sidebar" id="sidebar" aria-label="Menú lateral del foro privado">
+      <div class="sidebar__header">
+        <button class="sidebar__collapse" id="collapseSidebarBtn" type="button">
+          <i class="bx bx-sidebar"></i>
+          <span>Colapsar menú</span>
+        </button>
+
+        <button class="icon-btn sidebar__close" id="closeSidebarBtn" type="button" aria-label="Cerrar menú lateral">
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar__nav">
+        <!-- Sección Feed -->
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Feed</h2>
+
+          <a href="#" class="sidebar__link is-active">
+            <i class="bx bx-time-five"></i>
+            <span>Última Actividad</span>
+          </a>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-images"></i>
+            <span>Archivos/Media</span>
+          </a>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-bookmark"></i>
+            <span>Guardados</span>
+          </a>
+        </section>
+
+        <!-- Sección Canales -->
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Canales/Temas</h2>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-hash"></i>
+            <span>general</span>
+          </a>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-hash"></i>
+            <span>memes</span>
+          </a>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-hash"></i>
+            <span>coordinación-salidas</span>
+          </a>
+
+          <a href="#" class="sidebar__link">
+            <i class="bx bx-hash"></i>
+            <span>gaming</span>
+          </a>
+        </section>
+
+        <!-- Sección Amigos Conectados -->
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Amigos conectados</h2>
+
+          <a href="#" class="friend">
+            <span class="friend__avatar avatar avatar--blue">MA</span>
+            <span class="friend__info">
+              <strong>Mateo</strong>
+              <small>En línea</small>
+            </span>
+            <span class="status-dot"></span>
+          </a>
+
+          <a href="#" class="friend">
+            <span class="friend__avatar avatar avatar--green">VA</span>
+            <span class="friend__info">
+              <strong>Valeria</strong>
+              <small>En llamada</small>
+            </span>
+            <span class="status-dot"></span>
+          </a>
+
+          <a href="#" class="friend">
+            <span class="friend__avatar avatar avatar--purple">LU</span>
+            <span class="friend__info">
+              <strong>Lucas</strong>
+              <small>Jugando</small>
+            </span>
+            <span class="status-dot"></span>
+          </a>
+        </section>
+      </nav>
+
+      <div class="privacy-card">
+        <i class="bx bx-lock-alt privacy-card__icon"></i>
+        <div>
+          <h3>Grupo cerrado</h3>
+          <p>Solo los miembros invitados pueden ver y comentar publicaciones.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Feed central -->
+    <main class="main-feed">
+      <!-- Crear publicación -->
+      <section class="composer" aria-label="Crear una publicación">
+        <div class="composer__top">
+          <span class="avatar avatar--me">RA</span>
+
+          <button class="composer__input" type="button">
+            Compartir algo con el grupo...
+          </button>
+        </div>
+
+        <div class="composer__actions">
+          <button type="button">
+            <i class="bx bx-image-add"></i>
+            <span>Imagen</span>
+          </button>
+
+          <button type="button">
+            <i class="bx bx-link"></i>
+            <span>Enlace</span>
+          </button>
+
+          <button type="button">
+            <i class="bx bx-poll"></i>
+            <span>Encuesta</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Filtros visuales -->
+      <section class="feed-filter" aria-label="Filtros del grupo">
+        <button class="feed-filter__btn is-active" type="button" data-filter="all">Todo</button>
+        <button class="feed-filter__btn" type="button" data-filter="general">General</button>
+        <button class="feed-filter__btn" type="button" data-filter="memes">Memes</button>
+        <button class="feed-filter__btn" type="button" data-filter="gaming">Gaming</button>
+      </section>
+
+      <!-- Publicaciones de ejemplo en HTML -->
+      <section class="posts" id="posts">
+        <article class="post-card" data-category="general">
+          <header class="post-card__header">
+            <span class="avatar avatar--blue">MA</span>
+
+            <div class="post-card__meta">
+              <div>
+                <strong>Mateo</strong>
+                <span class="post-card__channel">#general</span>
+              </div>
+              <small>hace 12 min</small>
+            </div>
+
+            <button class="post-card__more" type="button" aria-label="Más opciones">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+            </button>
+          </header>
+
+          <div class="post-card__body">
+            <p>
+              Gente, hoy podríamos organizar lo del fin de semana. Digan quiénes pueden
+              y a qué hora les queda mejor para coordinar bien.
+            </p>
+          </div>
+
+          <footer class="post-card__footer">
+            <button class="reaction-btn" type="button" data-liked="false">
+              <i class="bx bx-heart"></i>
+              <span>Me gusta</span>
+              <strong class="like-count">8</strong>
+            </button>
+
+            <button class="comment-btn" type="button">
+              <i class="bx bx-message-rounded"></i>
+              <span>Comentarios</span>
+              <strong>14</strong>
+            </button>
+
+            <button class="share-btn" type="button">
+              <i class="bx bx-share-alt"></i>
+              <span>Compartir</span>
+            </button>
+          </footer>
+        </article>
+
+        <article class="post-card" data-category="memes">
+          <header class="post-card__header">
+            <span class="avatar avatar--green">VA</span>
+
+            <div class="post-card__meta">
+              <div>
+                <strong>Valeria</strong>
+                <span class="post-card__channel">#memes</span>
+              </div>
+              <small>hace 38 min</small>
+            </div>
+
+            <button class="post-card__more" type="button" aria-label="Más opciones">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+            </button>
+          </header>
+
+          <div class="post-card__body">
+            <p>
+              Subo este espacio como preview para el meme del día. Imaginen aquí una imagen
+              o captura que solo el grupo puede ver.
+            </p>
+
+            <div class="post-card__media">
+              <i class="bx bx-image"></i>
+              <span>Preview privado de imagen</span>
+            </div>
+          </div>
+
+          <footer class="post-card__footer">
+            <button class="reaction-btn" type="button" data-liked="false">
+              <i class="bx bx-heart"></i>
+              <span>Me gusta</span>
+              <strong class="like-count">21</strong>
+            </button>
+
+            <button class="comment-btn" type="button">
+              <i class="bx bx-message-rounded"></i>
+              <span>Comentarios</span>
+              <strong>9</strong>
+            </button>
+
+            <button class="share-btn" type="button">
+              <i class="bx bx-share-alt"></i>
+              <span>Compartir</span>
+            </button>
+          </footer>
+        </article>
+
+        <article class="post-card" data-category="gaming">
+          <header class="post-card__header">
+            <span class="avatar avatar--purple">LU</span>
+
+            <div class="post-card__meta">
+              <div>
+                <strong>Lucas</strong>
+                <span class="post-card__channel">#gaming</span>
+              </div>
+              <small>ayer a las 9:45 p. m.</small>
+            </div>
+
+            <button class="post-card__more" type="button" aria-label="Más opciones">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+            </button>
+          </header>
+
+          <div class="post-card__body">
+            <p>
+              Hoy en la noche sale partida privada. Llevo servidor listo y mods probados.
+              Confirmen quién entra para no esperar a última hora.
+            </p>
+
+            <div class="post-card__file">
+              <i class="bx bx-file"></i>
+              <div>
+                <strong>lista-mods-servidor.txt</strong>
+                <small>Archivo compartido dentro del grupo</small>
+              </div>
+            </div>
+          </div>
+
+          <footer class="post-card__footer">
+            <button class="reaction-btn" type="button" data-liked="false">
+              <i class="bx bx-heart"></i>
+              <span>Me gusta</span>
+              <strong class="like-count">15</strong>
+            </button>
+
+            <button class="comment-btn" type="button">
+              <i class="bx bx-message-rounded"></i>
+              <span>Comentarios</span>
+              <strong>27</strong>
+            </button>
+
+            <button class="share-btn" type="button">
+              <i class="bx bx-share-alt"></i>
+              <span>Compartir</span>
+            </button>
+          </footer>
+        </article>
+      </section>
+
+      <p class="empty-state" id="emptyState">
+        No se encontraron publicaciones con esa búsqueda.
+      </p>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
