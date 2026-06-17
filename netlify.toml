@@ -1,3 +1,2 @@
 [build]
-  base = "Foro_Amigos_Produccion"
   publish = "."
