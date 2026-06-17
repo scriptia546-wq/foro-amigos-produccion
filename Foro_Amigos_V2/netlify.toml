@@ -1,0 +1,3 @@
+[build]
+  base = "Foro_Amigos_V2"
+  publish = "."
