@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Círculo Privado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand-area">
+        <button id="mobileMenuBtn" class="icon-btn mobile-only" aria-label="Abrir menú">☰</button>
+        <div class="logo-mark">🛡</div>
+        <div class="brand-text">
+          <strong>Círculo</strong>
+          <span>🔒 Red privada</span>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <span>⌕</span>
+        <input id="globalSearch" type="search" placeholder="Buscar usuarios, mensajes o archivos" autocomplete="off" />
+        <button id="clearSearch" class="mini-x" title="Limpiar">×</button>
+        <div id="searchResults" class="search-results hidden"></div>
+      </div>
+
+      <div class="top-actions">
+        <button id="bellBtn" class="icon-btn bell-btn" aria-label="Notificaciones">🔔<span id="bellBadge" class="badge-dot hidden"></span></button>
+        <button id="profileBtn" class="profile-pill">
+          <span id="topAvatar" class="avatar avatar-sm">?</span>
+          <strong id="topName">Usuario</strong>
+          <span>⌄</span>
+        </button>
+        <div id="profileMenu" class="profile-menu hidden">
+          <button data-action="view-profile">♙ Ver mi perfil</button>
+          <button data-action="edit-profile">✎ Editar perfil</button>
+          <button data-action="notifications">🔔 Notificaciones</button>
+          <button data-action="logout">↪ Cerrar sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside id="sidebar" class="sidebar">
+        <button id="collapseMenuBtn" class="sidebar-collapse">▣ <span>Minimizar menú</span></button>
+
+        <nav class="side-section">
+          <div class="side-title">FEED</div>
+          <button class="side-link active" data-view="feed">◷ <span>Última Actividad</span></button>
+          <button class="side-link" data-view="media">▧ <span>Archivos/Media</span></button>
+          <button class="side-link" data-view="events">▣ <span>Eventos</span></button>
+          <button class="side-link" data-view="saved">▯ <span>Guardados</span></button>
+          <button class="side-link" data-view="downloads">⇩ <span>Descargas</span></button>
+        </nav>
+
+        <section class="friends-block">
+          <div class="friends-head">
+            <span>AMIGOS CONECTADOS</span>
+            <button id="refreshFriendsBtn" class="ghost-mini" title="Actualizar">↻</button>
+          </div>
+          <div id="onlineFriends" class="friend-list muted-box">No hay amigos conectados.</div>
+        </section>
+
+        <section class="friends-block">
+          <div class="friends-head"><span>AMIGOS DESCONECTADOS</span></div>
+          <div id="offlineFriends" class="friend-list muted-box">No hay amigos desconectados.</div>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="composer card">
+          <div class="composer-row">
+            <span id="composerAvatar" class="avatar">?</span>
+            <textarea id="postText" rows="1" placeholder="Compartir algo con el grupo..."></textarea>
+            <button id="sendPostBtn" class="send-btn" title="Publicar">➤</button>
+          </div>
+          <div class="composer-tools">
+            <button data-compose="image">▧ Imagen</button>
+            <button data-compose="file">📎 Archivo</button>
+            <button data-compose="poll">⚑ Encuesta</button>
+            <button data-compose="event">▣ Evento</button>
+          </div>
+        </section>
+
+        <div class="tabs card" id="channelTabs">
+          <button class="tab active" data-filter="all">Todo <span class="tab-badge hidden"></span></button>
+          <button class="tab" data-filter="general">General <span class="tab-badge hidden"></span></button>
+          <button class="tab" data-filter="memes">Memes <span class="tab-badge hidden"></span></button>
+          <button class="tab" data-filter="gaming">Gaming <span class="tab-badge hidden"></span></button>
+          <button class="tab" data-filter="events">Eventos <span class="tab-badge hidden"></span></button>
+        </div>
+
+        <div id="viewTitle" class="view-title hidden"></div>
+        <div id="feed" class="feed"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modalLayer" class="modal-layer hidden"></div>
+  <div id="toastStack" class="toast-stack"></div>
+  <input id="hiddenFileInput" type="file" class="hidden" />
+  <script src="script.js"></script>
+</body>
+</html>
