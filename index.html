@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Círculo Privado | Foro de Amigos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  <div class="toast-area" id="toastArea"></div>
+
+  <header class="navbar">
+    <div class="navbar__left">
+      <button class="icon-btn navbar__menu-btn" id="openSidebarBtn" aria-label="Abrir menú"><i class="bx bx-menu"></i></button>
+      <a href="#" class="brand" id="brandHome">
+        <span class="brand__mark"><i class="bx bx-shield-quarter"></i></span>
+        <span class="brand__text"><strong>Círculo</strong><small><i class="bx bx-lock-alt"></i> Red privada</small></span>
+      </a>
+    </div>
+
+    <div class="search-shell">
+      <form class="search" id="searchForm">
+        <i class="bx bx-search search__icon"></i>
+        <input id="searchInput" class="search__input" type="search" placeholder="Buscar usuarios, mensajes o archivos" autocomplete="off" />
+        <button id="clearSearchBtn" class="search__clear" type="button" aria-label="Limpiar búsqueda"><i class="bx bx-x"></i></button>
+      </form>
+      <div class="search-results" id="searchResults" hidden></div>
+    </div>
+
+    <div class="navbar__actions">
+      <button class="new-post-btn" id="newPostBtn"><i class="bx bx-plus"></i><span>Nuevo Post</span></button>
+      <button class="icon-btn notification-btn" id="notificationsBtn" aria-label="Notificaciones"><i class="bx bx-bell"></i><span class="notification-dot" id="notificationDot" hidden></span></button>
+      <button class="user-chip" id="profileMenuBtn">
+        <span class="avatar avatar--me" id="activeUserAvatar">RO</span>
+        <span class="user-chip__name" id="activeUserName">Rodrigo</span>
+        <i class="bx bx-chevron-down"></i>
+      </button>
+      <div class="profile-menu" id="profileMenu" hidden>
+        <button data-profile-action="view-my-profile"><i class="bx bx-user"></i> Ver mi perfil</button>
+        <button data-profile-action="edit-profile"><i class="bx bx-edit"></i> Editar perfil</button>
+        <button data-profile-action="notifications"><i class="bx bx-bell"></i> Notificaciones</button>
+        <button data-profile-action="logout"><i class="bx bx-log-out"></i> Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <button class="sidebar__collapse" id="collapseSidebarBtn"><i class="bx bx-sidebar"></i><span>Minimizar menú</span></button>
+        <button class="icon-btn sidebar__close" id="closeSidebarBtn" aria-label="Cerrar menú"><i class="bx bx-x"></i></button>
+      </div>
+
+      <nav class="sidebar__nav">
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Feed</h2>
+          <a href="#" class="sidebar__link is-active" data-filter-sidebar="all"><i class="bx bx-time-five"></i><span>Última Actividad</span></a>
+          <a href="#" class="sidebar__link" data-filter-sidebar="media"><i class="bx bx-images"></i><span>Archivos/Media</span></a>
+          <a href="#" class="sidebar__link" data-filter-sidebar="eventos"><i class="bx bx-calendar-event"></i><span>Eventos</span></a>
+          <a href="#" class="sidebar__link" data-filter-sidebar="saved"><i class="bx bx-bookmark"></i><span>Guardados</span></a>
+          <a href="#" class="sidebar__link" data-filter-sidebar="downloads"><i class="bx bx-download"></i><span>Descargas</span></a>
+        </section>
+
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Canales/Temas</h2>
+          <a href="#" class="sidebar__link" data-channel-link="general"><i class="bx bx-hash"></i><span>general</span></a>
+          <a href="#" class="sidebar__link" data-channel-link="memes"><i class="bx bx-hash"></i><span>memes</span></a>
+          <a href="#" class="sidebar__link" data-channel-link="coordinación-salidas"><i class="bx bx-hash"></i><span>coordinación-salidas</span></a>
+          <a href="#" class="sidebar__link" data-channel-link="gaming"><i class="bx bx-hash"></i><span>gaming</span></a>
+        </section>
+
+        <section class="sidebar__section">
+          <div class="sidebar__section-head">
+            <h2 class="sidebar__title">Amigos conectados</h2>
+            <button class="mini-btn" id="refreshFriendsBtn" title="Actualizar amigos"><i class="bx bx-refresh"></i></button>
+          </div>
+          <div id="onlineFriends" class="friends-list"></div>
+        </section>
+
+        <section class="sidebar__section">
+          <h2 class="sidebar__title">Amigos desconectados</h2>
+          <div id="offlineFriends" class="friends-list"></div>
+        </section>
+      </nav>
+    </aside>
+
+    <main class="main-feed">
+      <section class="composer" id="composer">
+        <div class="composer__top">
+          <span class="avatar avatar--me" id="composerAvatar">RO</span>
+          <div class="composer__field-wrap">
+            <div id="composerInput" class="composer__input" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Compartir algo con el grupo..."></div>
+            <button class="composer__send" id="sendPostBtn" type="button" aria-label="Publicar"><i class="bx bx-send"></i></button>
+          </div>
+        </div>
+        <div id="attachmentPreview" class="attachment-preview" hidden></div>
+        <div class="composer__actions">
+          <button id="imagePostBtn" type="button"><i class="bx bx-image-add"></i><span>Imagen</span></button>
+          <button id="filePostBtn" type="button"><i class="bx bx-paperclip"></i><span>Archivo</span></button>
+          <button id="pollPostBtn" type="button"><i class="bx bx-poll"></i><span>Encuesta</span></button>
+          <button id="eventPostBtn" type="button"><i class="bx bx-calendar-plus"></i><span>Evento</span></button>
+        </div>
+      </section>
+
+      <section class="feed-filter">
+        <button class="feed-filter__btn is-active" data-filter="all">Todo</button>
+        <button class="feed-filter__btn" data-filter="general">General</button>
+        <button class="feed-filter__btn" data-filter="memes">Memes</button>
+        <button class="feed-filter__btn" data-filter="gaming">Gaming</button>
+        <button class="feed-filter__btn" data-filter="eventos">Eventos</button>
+      </section>
+
+      <section class="posts" id="posts"></section>
+      <p class="empty-state" id="emptyState">No se encontraron publicaciones con esa búsqueda.</p>
+    </main>
+  </div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel" id="modalPanel"></div>
+  </div>
+
+  <input id="hiddenImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+  <input id="hiddenFileInput" type="file" hidden />
+  <input id="hiddenDmFileInput" type="file" hidden />
+  <script src="script.js"></script>
+</body>
+</html>
